@@ -2,26 +2,25 @@ version: '3.8'
 
 services:
   dashboard:
-    image: drupal:9
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
     depends_on:
       - mariadb
     networks:
       - dashboard_private
+      - default
     volumes:
       - ./dashboard/drupal:/var/www/html
-    environment:
-      - MYSQL_HOST=mariadb
-      - MYSQL_DATABASE=drupal
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=password
+    env_file:
+      - .env_dashboard
 
   mariadb:
-    image: mariadb:latest
+    image: mariadb:10.6
     networks:
-      - dashboard_private
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=drupal
+      - default
+    env_file:
+      - .env_dashboard
 
 networks:
   dashboard_private:

@@ -1,0 +1,29 @@
+FROM drupal:9
+
+# Install additional packages
+RUN apt-get update && apt-get install -y \
+    wget \
+    vim \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+# Install Drush
+RUN wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar \
+    && chmod +x drush.phar \
+    && mv drush.phar /usr/local/bin/drush
+
+# Install PHP CodeSniffer (PHPCS)
+RUN composer global require "squizlabs/php_codesniffer=*"
+
+# Set Drupal coding standards as default for PHPCS
+RUN phpcs --config-set installed_paths /root/.composer/vendor/drupal/coder/coder_sniffer \
+    && phpcs --config-set default_standard Drupal
+
+# Set working directory to Drupal web root
+WORKDIR /var/www/html
+
+# Expose port 80 for web server
+EXPOSE 80
