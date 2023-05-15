@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  dashboard:
+    image: drupal:9
+    depends_on:
+      - mariadb
+    networks:
+      - dashboard_private
+    volumes:
+      - ./dashboard/drupal:/var/www/html
+    environment:
+      - MYSQL_HOST=mariadb
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+
+  mariadb:
+    image: mariadb:latest
+    networks:
+      - dashboard_private
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=drupal
+
+networks:
+  dashboard_private:

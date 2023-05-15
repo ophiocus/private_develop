@@ -1,0 +1,8 @@
+version: '3'
+services:
+  bind9:
+    image: sameersbn/bind:latest
+    volumes:
+      - ./bind9:/data
+      - ./bind9/named.conf:/etc/bind/named.conf
+    restart: always

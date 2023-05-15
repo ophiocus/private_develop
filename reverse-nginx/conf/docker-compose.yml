@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  nginx-reverse:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx-reverse/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-reverse/ssl:/etc/nginx/ssl
+
+volumes:
+  nginx-reverse:
