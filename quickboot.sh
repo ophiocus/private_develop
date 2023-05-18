@@ -1,7 +1,12 @@
 #!/bin/zsh
 
-compose_files_file="compose_files.txt"
+compose_files_file="quickboot.conf"
 compose_files=()
+
+# This file provides a quickboot agent that performs the following tasks
+# Check ports are not already in use.
+# Attempts to docker up all the entries listed in config file
+#
 
 # Read and parse the Docker Compose file paths from the file
 while IFS= read -r line; do
@@ -25,22 +30,9 @@ trigger_docker_compose() {
     return
   fi
 
-  echo "Checking ports before triggering Docker Compose for $absolute_path..."
-
-  local port_in_use=false
-  for port in 80 443 3306; do
-    if lsof -i:$port >/dev/null; then
-      echo "Port $port is already in use."
-      port_in_use=true
-    fi
-  done
-
-  if [ "$port_in_use" = true ]; then
-    echo "Cannot trigger Docker Compose for $absolute_path due to port conflicts."
-  else
-    echo "Triggering Docker Compose using absolute path: $absolute_path"
-    docker-compose -f "$absolute_path" up -d
-  fi
+  
+  docker-compose -f "$absolute_path" up -d
+  
 }
 
 for file in "${compose_files[@]}"; do

@@ -26,4 +26,4 @@ RUN phpcs --config-set installed_paths /root/.composer/vendor/drupal/coder/coder
 WORKDIR /var/www/html
 
 # Expose port 80 for web server
-EXPOSE 80
+EXPOSE 80 443
