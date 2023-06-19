@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Check if the Macvlan name is provided as a command-line argument
 if [[ -z $1 ]]; then

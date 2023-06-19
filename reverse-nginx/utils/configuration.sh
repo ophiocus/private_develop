@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # Function to configure NGINX for the joined container
 configure_nginx_for_container() {
@@ -8,6 +8,7 @@ configure_nginx_for_container() {
     domain_name=$(docker inspect --format '{{ index .Config.Env "DOMAIN_NAME" }}' "$container_id")
     ssl_cert=$(docker inspect --format '{{ index .Config.Env "SSL_CERT" }}' "$container_id")
     ssl_key=$(docker inspect --format '{{ index .Config.Env "SSL_KEY" }}' "$container_id")
+
 
     # Configure NGINX for the joined container
     if [ -n "$domain_name" ]; then

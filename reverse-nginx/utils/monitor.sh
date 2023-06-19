@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # Continuously monitor Docker events
 docker events --filter 'type=network' --format '{{json .}}' |

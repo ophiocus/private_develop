@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # Array to store container names
 containers=()
